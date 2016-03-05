@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+ "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="test">
+ <!-- Use primitive wrapper type (e.g. Integer) as parameter and allow results to
+ be auto-mapped results to Person object (Java Bean) properties -->
+ <typeAlias alias="user" type="com.regaltec.baf.test.common.valueobj.UserVO" /><!-- obj -->
+ <select id="getTest" parameterClass="String" resultClass="com.regaltec.baf.test.common.valueobj.UserVO">
+  SELECT loginname as userName,
+  password as password
+  
+  FROM baf_org_user
+  WHERE loginname = #loginname#
+ </select>
+ <insert id="insertTest" parameterClass="user">
+   insert into baf_org_user(
+                          userId,
+
+                          userName,
+
+                          loginName,
+                          password,
+                          userType,
+                          isValid
+                          )
+
+                      values(
+
+                          #userId#,
+
+                          #userName#,
+
+                          #loginName#,
+                          #password#,
+                          #userType#,
+                          #isValid#
+                      )
+
+   
+ </insert>
+ </sqlMap>
+ <!--<insert id="insertTestUnit" parameterClass="user">
+   insert into baf_org_unit_user(
+                          userId,
+
+                          unitId
+                          )
+
+                      values(
+
+                          #userId#,
+
+                          #unitId#
+
+                      )
+
+   
+</insert>-->
+
+
+
+
+

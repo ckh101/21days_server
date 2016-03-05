@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="user">
+ <typeAlias alias="userBean" type="org.androidpn.server.model.User"/>
+    <resultMap id="userResult" class="org.androidpn.server.model.User">
+		<result column="id" property="id" javaType="java.lang.Long"/>
+		<result column="email" property="email" javaType="string" />
+		<result column="name" property="name" javaType="string" />
+		<result column="password" property="password" javaType="string" />
+		<result column="username" property="username" javaType="string" />
+		<result column="created_date" property="createTime" javaType="java.util.Date" />
+		<result column="updated_date" property="updateTime" javaType="java.util.Date" />
+    </resultMap>
+    
+    <sql id="getUserAllFieldSql">
+		select
+			id,
+			email,
+			name,
+			password,
+			username,
+			created_date,
+			updated_date
+		from apn_user
+	</sql>
+	
+	<select id="getUserById" resultMap="userResult" parameterClass="long">
+		<include refid="getUserAllFieldSql"/>
+		where id = #value#
+	</select>
+	
+	<select id="getUserByUsername" resultMap="userResult" parameterClass="string">
+		<include refid="getUserAllFieldSql"/>
+		where username = #value#
+	</select>
+
+    <select id="getUserList" resultMap="userResult" parameterClass="java.util.HashMap">
+		<include refid="getUserAllFieldSql"/>
+	</select>
+	
+	<insert id="insertUser" parameterClass="org.androidpn.server.model.User">
+     	insert into apn_user (
+			email,
+			name,
+			password,
+			username
+     	)
+     	values(
+			#email#,
+			#name#,
+			#password#,
+			#username#
+     	)
+    </insert>
+	<update id="updateUser" parameterClass="org.androidpn.server.model.User">
+		update apn_user 
+		set 
+			email = #email#,
+			name = #name#,
+			password = #password#,
+			username = #username#,
+			created_date = #createTime#,
+			updated_date = #updateTime#
+		where id = #id#
+	</update>
+	
+    <delete id="deleteUser" parameterClass="java.lang.Long">
+    	delete from apn_user
+    	where id = #value#
+    </delete>
+</sqlMap>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="test_question" >
+  <resultMap id="BaseResultMap" class="com.zhku.my21days.vo.Question" >
+    <result column="id" property="qId" jdbcType="int" />
+    <result column="qnum" property="qnum" jdbcType="int" />
+    <result column="question" property="question" jdbcType="varchar" />
+    <result column="time" property="time" jdbcType="data" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <iterate property="oredCriteria" conjunction="or" prepend="where" removeFirstPrepend="iterate" >
+      <isEqual property="oredCriteria[].valid" compareValue="true" >
+        (
+        <iterate prepend="and" property="oredCriteria[].criteriaWithoutValue" conjunction="and" >
+          $oredCriteria[].criteriaWithoutValue[]$
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithSingleValue" conjunction="and" >
+          $oredCriteria[].criteriaWithSingleValue[].condition$
+            #oredCriteria[].criteriaWithSingleValue[].value#
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithListValue" conjunction="and" >
+          $oredCriteria[].criteriaWithListValue[].condition$
+          <iterate property="oredCriteria[].criteriaWithListValue[].values" open="(" close=")" conjunction="," >
+            #oredCriteria[].criteriaWithListValue[].values[]#
+          </iterate>
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithBetweenValue" conjunction="and" >
+          $oredCriteria[].criteriaWithBetweenValue[].condition$
+          #oredCriteria[].criteriaWithBetweenValue[].values[0]# and
+          #oredCriteria[].criteriaWithBetweenValue[].values[1]#
+        </iterate>
+        )
+      </isEqual>
+    </iterate>
+  </sql>
+  <sql id="oracle_Pagination_Head" >
+    <dynamic >
+      <isNotEmpty property="fromNumber" >
+        <isNotEmpty property="toNumber" >
+          <![CDATA[select * from ( select t.*, rownum rownum_ from ( ]]>
+        </isNotEmpty>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+  <sql id="oracle_Pagination_Tail" >
+    <dynamic >
+      <isNotEmpty property="fromNumber" >
+        <isNotEmpty property="toNumber" >
+          <![CDATA[) t where rownum <= #toNumber# ) where rownum_ > #fromNumber#]]>
+        </isNotEmpty>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterClass="com.zhku.my21days.vo.QuestionExample" >
+    <include refid="oracle_Pagination_Head" />
+    select id, qnum, question, time
+    from test_question
+    <isParameterPresent >
+      <include refid="test_question.Example_Where_Clause" />
+      <isNotNull property="orderByClause" >
+        order by $orderByClause$
+      </isNotNull>
+    </isParameterPresent>
+    <include refid="oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterClass="com.zhku.my21days.vo.Question" >
+    select id, qnum, question, time
+    from test_question
+    where id = #qId:int#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.zhku.my21days.vo.Question" >
+    delete from test_question
+    where id = #qId:int#
+  </delete>
+  <delete id="deleteByExample" parameterClass="com.zhku.my21days.vo.QuestionExample" >
+    delete from test_question
+    <include refid="test_question.Example_Where_Clause" />
+  </delete>
+  <insert id="insert" parameterClass="com.zhku.my21days.vo.Question" >
+    insert into test_question (id, qnum, question, time)
+    values (#qId:int#, #qnum:int#, #question:varchar#, #time:data#)
+  </insert>
+  <insert id="insertSelective" parameterClass="com.zhku.my21days.vo.Question" >
+    insert into test_question
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="qId" >
+        id
+      </isNotNull>
+      <isNotNull prepend="," property="qnum" >
+        qnum
+      </isNotNull>
+      <isNotNull prepend="," property="question" >
+        question
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        time
+      </isNotNull>
+      )
+    </dynamic>
+    values
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="qId" >
+        #qId:int#
+      </isNotNull>
+      <isNotNull prepend="," property="qnum" >
+        #qnum:int#
+      </isNotNull>
+      <isNotNull prepend="," property="question" >
+        #question:varchar#
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        #time:data#
+      </isNotNull>
+      )
+    </dynamic>
+  </insert>
+  <select id="countByExample" parameterClass="com.zhku.my21days.vo.QuestionExample" resultClass="java.lang.Integer" >
+    select count(*) from test_question
+    <include refid="test_question.Example_Where_Clause" />
+  </select>
+  <update id="updateByExampleSelective" >
+    update test_question
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="record.qId" >
+        id = #record.qId:int#
+      </isNotNull>
+      <isNotNull prepend="," property="record.qnum" >
+        qnum = #record.qnum:int#
+      </isNotNull>
+      <isNotNull prepend="," property="record.question" >
+        question = #record.question:varchar#
+      </isNotNull>
+      <isNotNull prepend="," property="record.time" >
+        time = #record.time:data#
+      </isNotNull>
+    </dynamic>
+    <isParameterPresent >
+      <include refid="test_question.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByExample" >
+    update test_question
+    set id = #record.qId:int#,
+      qnum = #record.qnum:int#,
+      question = #record.question:varchar#,
+      time = #record.time:data#
+    <isParameterPresent >
+      <include refid="test_question.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterClass="com.zhku.my21days.vo.Question" >
+    update test_question
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="qnum" >
+        qnum = #qnum:int#
+      </isNotNull>
+      <isNotNull prepend="," property="question" >
+        question = #question:varchar#
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        time = #time:data#
+      </isNotNull>
+    </dynamic>
+    where id = #qId:int#
+  </update>
+  <update id="updateByPrimaryKey" parameterClass="com.zhku.my21days.vo.Question" >
+    update test_question
+    set qnum = #qnum:int#,
+      question = #question:varchar#,
+      time = #time:data#
+    where id = #qId:int#
+  </update>
+</sqlMap>

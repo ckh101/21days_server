@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" 
+			  enhancementEnabled="true"
+			  lazyLoadingEnabled="true" 
+			  errorTracingEnabled="false" 
+			  maxRequests="1000"
+		      maxSessions="1000" 
+		      maxTransactions="1000" 
+		      useStatementNamespaces="true" />
+     <typeHandler jdbcType="BLOB" javaType="[B" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler" />   
+     <typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler" />   
+  
+    
+	<sqlMap	resource="com/zhku/my21days/dao/androidpn/apn_user_SqlMap.xml"/>
+	<sqlMap	resource="com/zhku/my21days/dao/my21days/user_SqlMap.xml"/>
+	<sqlMap	resource="com/zhku/my21days/dao/my21days/test_analys_SqlMap.xml"/>
+	<sqlMap	resource="com/zhku/my21days/dao/my21days/test_question_SqlMap.xml"/>
+	<sqlMap	resource="com/zhku/my21days/dao/my21days/advices_SqlMap.xml"/>
+	<sqlMap	resource="com/zhku/my21days/dao/my21days/tasklist_SqlMap.xml"/>
+	
+</sqlMapConfig>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:s="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/security	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    <s:http pattern="/css/**" security="none"/>
+     <s:http pattern="/images/**" security="none"/>
+     <s:http pattern="/javascript/**" security="none"/>
+     <s:http pattern="/question/**" security="none"/>
+     <s:http pattern="/analys/**" security="none"/>
+     <s:http pattern="/advices/**" security="none"/>
+     <s:http pattern="/task/**" security="none"/>
+     <s:http auto-config='true'>
+		<s:intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<s:intercept-url pattern="/admin.jsp" access="ROLE_ADMIN" />
+		<s:intercept-url pattern="/**" access="ROLE_USER" />
+		<s:form-login login-page="/login.jsp"
+		authentication-failure-url="/login.jsp?error=true"
+		default-target-url="/login/toIndex" />
+		<s:logout invalidate-session="true" logout-success-url="/login.jsp?logout=1"   logout-url="/j_spring_security_logout" /> 
+		<s:session-management invalid-session-url="/login.jsp?session=1" session-fixation-protection="none">  
+        <!-- 只允许一个人登陆,并且第二个人登陆不了 -->  
+            <s:concurrency-control max-sessions="10" expired-url="/index.jsp?expired=1" error-if-maximum-exceeded="true"/>  
+        </s:session-management>  
+     </s:http>
+     
+	<s:authentication-manager alias="authenticationManager">
+	     <s:authentication-provider>
+	     	<!-- <s:password-encoder hash="md5"/> -->
+			<s:jdbc-user-service data-source-ref="dataSource"
+			users-by-username-query="select username,password,status as enabled
+			from user
+			where username=?"
+			authorities-by-username-query="select u.username,r.name as authority
+			from user u
+			join user_role ur
+			on u.id=ur.user_id
+			join role r
+			on r.id=ur.role_id
+			where u.username=?"/>
+		</s:authentication-provider>
+	</s:authentication-manager>
+	 <bean id="captchaService"  
+        class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">  
+        <property name="captchaEngine">  
+            <bean class="com.zhku.my21days.jcaptcha.GMailEngine" />  
+        </property>  
+        <property name="minGuarantedStorageDelayInSeconds" value="180" />  
+    </bean>  
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    	<property name="basename" value="classpath:org/springframework/security/message_zh_CN"/> 
+    </bean>
+</beans>

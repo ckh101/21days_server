@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="21days_server"
+  id="myeclipse.1391734855658"
+  context-root="/21days_server"
+  j2ee-spec="6.0"
+  archive="21days_server.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

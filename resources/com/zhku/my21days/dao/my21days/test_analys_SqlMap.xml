@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="test_analys" >
+  <resultMap id="BaseResultMap" class="com.zhku.my21days.vo.Analys" >
+    <result column="id" property="aId" jdbcType="int" />
+    <result column="animal" property="animal" jdbcType="varchar" />
+    <result column="dicrip" property="dicrip" jdbcType="text" />
+    <result column="time" property="time" jdbcType="data" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <iterate property="oredCriteria" conjunction="or" prepend="where" removeFirstPrepend="iterate" >
+      <isEqual property="oredCriteria[].valid" compareValue="true" >
+        (
+        <iterate prepend="and" property="oredCriteria[].criteriaWithoutValue" conjunction="and" >
+          $oredCriteria[].criteriaWithoutValue[]$
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithSingleValue" conjunction="and" >
+          $oredCriteria[].criteriaWithSingleValue[].condition$
+            #oredCriteria[].criteriaWithSingleValue[].value#
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithListValue" conjunction="and" >
+          $oredCriteria[].criteriaWithListValue[].condition$
+          <iterate property="oredCriteria[].criteriaWithListValue[].values" open="(" close=")" conjunction="," >
+            #oredCriteria[].criteriaWithListValue[].values[]#
+          </iterate>
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithBetweenValue" conjunction="and" >
+          $oredCriteria[].criteriaWithBetweenValue[].condition$
+          #oredCriteria[].criteriaWithBetweenValue[].values[0]# and
+          #oredCriteria[].criteriaWithBetweenValue[].values[1]#
+        </iterate>
+        )
+      </isEqual>
+    </iterate>
+  </sql>
+  <sql id="oracle_Pagination_Head" >
+    <dynamic >
+      <isNotEmpty property="fromNumber" >
+        <isNotEmpty property="toNumber" >
+          <![CDATA[select * from ( select t.*, rownum rownum_ from ( ]]>
+        </isNotEmpty>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+  <sql id="oracle_Pagination_Tail" >
+    <dynamic >
+      <isNotEmpty property="fromNumber" >
+        <isNotEmpty property="toNumber" >
+          <![CDATA[) t where rownum <= #toNumber# ) where rownum_ > #fromNumber#]]>
+        </isNotEmpty>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterClass="com.zhku.my21days.vo.AnalysExample" >
+    <include refid="oracle_Pagination_Head" />
+    select id, animal, dicrip, time
+    from test_analys
+    <isParameterPresent >
+      <include refid="test_analys.Example_Where_Clause" />
+      <isNotNull property="orderByClause" >
+        order by $orderByClause$
+      </isNotNull>
+    </isParameterPresent>
+    <include refid="oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterClass="com.zhku.my21days.vo.Analys" >
+    select id, animal, dicrip, time
+    from test_analys
+    where id = #aId:int#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.zhku.my21days.vo.Analys" >
+    delete from test_analys
+    where id = #aId:int#
+  </delete>
+  <delete id="deleteByExample" parameterClass="com.zhku.my21days.vo.AnalysExample" >
+    delete from test_analys
+    <include refid="test_analys.Example_Where_Clause" />
+  </delete>
+  <insert id="insert" parameterClass="com.zhku.my21days.vo.Analys" >
+    insert into test_analys (id, animal, dicrip, time)
+    values (#aId:int#, #animal:varchar#, #dicrip:text#, #time:data#)
+  </insert>
+  <insert id="insertSelective" parameterClass="com.zhku.my21days.vo.Analys" >
+    insert into test_analys
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="aId" >
+        id
+      </isNotNull>
+      <isNotNull prepend="," property="animal" >
+        animal
+      </isNotNull>
+      <isNotNull prepend="," property="dicrip" >
+        dicrip
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        time
+      </isNotNull>
+      )
+    </dynamic>
+    values
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="aId" >
+        #aId:int#
+      </isNotNull>
+      <isNotNull prepend="," property="animal" >
+        #animal:varchar#
+      </isNotNull>
+      <isNotNull prepend="," property="dicrip" >
+        #dicrip:text#
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        #time:data#
+      </isNotNull>
+      )
+    </dynamic>
+  </insert>
+  <select id="countByExample" parameterClass="com.zhku.my21days.vo.AnalysExample" resultClass="java.lang.Integer" >
+    select count(*) from test_analys
+    <include refid="test_analys.Example_Where_Clause" />
+  </select>
+  <update id="updateByExampleSelective" >
+    update test_analys
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="record.aId" >
+        id = #record.aId:int#
+      </isNotNull>
+      <isNotNull prepend="," property="record.animal" >
+        animal = #record.animal:varchar#
+      </isNotNull>
+      <isNotNull prepend="," property="record.dicrip" >
+        dicrip = #record.dicrip:text#
+      </isNotNull>
+      <isNotNull prepend="," property="record.time" >
+        time = #record.time:data#
+      </isNotNull>
+    </dynamic>
+    <isParameterPresent >
+      <include refid="test_analys.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByExample" >
+    update test_analys
+    set id = #record.aId:int#,
+      animal = #record.animal:varchar#,
+      dicrip = #record.dicrip:text#,
+      time = #record.time:data#
+    <isParameterPresent >
+      <include refid="test_analys.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterClass="com.zhku.my21days.vo.Analys" >
+    update test_analys
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="animal" >
+        animal = #animal:varchar#
+      </isNotNull>
+      <isNotNull prepend="," property="dicrip" >
+        dicrip = #dicrip:text#
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        time = #time:data#
+      </isNotNull>
+    </dynamic>
+    where id = #aId:int#
+  </update>
+  <update id="updateByPrimaryKey" parameterClass="com.zhku.my21days.vo.Analys" >
+    update test_analys
+    set animal = #animal:varchar#,
+      dicrip = #dicrip:text#,
+      time = #time:data#
+    where id = #aId:int#
+  </update>
+</sqlMap>

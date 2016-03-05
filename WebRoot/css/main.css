@@ -1,0 +1,220 @@
+
+html.html{ 
+ margin:0px; 
+ width:100%;
+ height:100%; 
+ background-color:#f0fbff;
+}
+html.html body,body{ margin: 0px;padding: 0px;}
+/* 去掉checkbox边框*/
+.chkBorder{margin:0 0;padding:0 0;height:12px;width:12px;;border:0px solid;}
+
+/*按【钮默】认样式*/
+button{
+	height:28px;
+	min-width:50px;
+	cursor: pointer; 
+}
+img{cursor: pointer;border: 0px;}
+/**定义【下拉列表】框样式**/
+select {
+	border:1px solid #B5D6EF;
+	cursor:pointer;
+	height:20px;
+	margin-left:4px;
+}
+
+/**定义【多行文本框】样式**/
+textarea{
+	border: 1px solid #71bed5;
+	background:#f3f3f3;
+	width:97%;
+	height:70px;
+	color: #00468e;
+	cursor: text;
+	font-size: 12px;
+	padding: 1px;
+	margin-top:3px;
+	margin-bottom:3px;
+}
+
+/**定义【table】样式**/
+table{
+	width:100%;
+	color:#000000;
+　　 font-size:12px;
+	padding:0;
+	border:0;margin:0;
+	border-collapse:collapse;
+}
+ 
+
+/*TABLE标题的样式*/
+th{
+	font-size: 12px;
+	width:100%;
+	text-align:center;
+	height:10px;
+	word-break:break-all; /* 表头不换行*/
+}
+
+.td1{
+    background: #eef6fb;
+	text-align:center;
+	height:26px;
+ }
+ body.td1{text-align: left;}
+.td2{
+	background: #eef6fb;
+	text-align:center;
+	height:18px;
+}
+
+/*td缺省字体*/
+td{
+	font-size: 12px;
+}
+
+/***查询表单主表***/
+table.main_table_form{
+	width:100%;
+	margin:0;
+	padding:0;
+	border-collapse:collapse;
+	background-image: url(../images/pub/tr_bg1.png);
+	background-repeat:repeat-x;	
+}
+.main_table_form thead tr.tr_search{
+	cursor: pointer;
+}
+.main_table_form thead tr th.th_search1,.main_table_form thead tr th.th_search2{
+	height:27px;
+	padding:0;
+	border:0;
+	margin:0;
+}
+.main_table_form thead tr th.th_search1{
+	padding-left:10px;
+	text-align:left;
+	background:url('../images/pub/td_frist.png') left no-repeat;
+}
+.main_table_form thead tr th.th_search2{
+	text-align:right;
+	background:url('../images/pub/td_end.png') right no-repeat;
+}
+
+.main_table_form_tr{
+	font-size: 12px;
+	cursor: pointer;
+	border: 0;
+	width: 100%;
+}
+.main_table_form_arrow{
+	cursor: pointer;
+	margin-right:8px;
+	
+}	
+/***查询表单子表***/
+table.sub_table_form{
+	width:100%;
+	margin:0px;
+	background: #f8f8f8; padding:0PX; border-bottom:solid 1px #509db3;
+}
+td#comp_tr{
+	border:solid 0px #509db3;
+	border-left: solid 1px #509db3;
+	border-right: solid 1px #509db3;
+}
+
+/**** sub_table_form td 样式****/
+table.sub_table_form TD{
+	padding-left:5px; padding-right:5px;
+}
+table.sub_table_form tr td.td_name{
+	text-align: right;
+}
+table.sub_table_form tr td.td_last{
+	text-align: left;
+}
+
+/*table.sub_table_form tbody tr td input[type="text"]{*/
+input[type="text"]{
+    height: 25px;
+	background:url(../images/pub/text.png) no-repeat;
+	border:0px;
+	width: 145px;
+	color: #666;
+}
+input.libCurrentPage{background: #fff;border:1px solid #b3d3e7;}
+/**重写 日期 input 样式**/
+input.Wdate{
+	background: url(../js/My97DatePicker/skin/date.gif) no-repeat;
+    height: 25px;
+	border:0px;
+	width: 145px;
+	font-size:11px;
+}
+/***颜色文本框  去掉背景图片**/
+#colorBox{height:20px;background:url() no-repeat;}
+/***无边框table**/
+.table_no_frame{
+	width:100%;
+	border: #FFFFFF thin solid;
+	border:0px;
+}
+/**** 默认下拉框样式 
+.selectStyle{height: 24px;width: 130px;}
+****/
+div select.selectStyle{width: 170px;}
+/*
+table.alarmSrcTab tr td select.selectStyle{border-bottom:1px solid #004e74;padding: 3px 4px 8px 0px; }
+*/
+table.alarmDetail{border: 0px;}
+table.alarmDetail td.tg_bg{background: url("../images/pub/bg_x.png") no-repeat right;}
+table.alarmDetail td.td1{
+	width:80px;border:1px solid #708290;height:18px;text-align: right; padding-right:10px; background:#e2f3ff;
+}
+table.alarmDetail td.td2{
+	text-align: left; padding-left:10px;border:1px solid #708290;
+}
+
+body#body,div#alarmTableDiv{margin: 0;padding: 0;}
+
+fieldset table tr th.td1{width: 150px; background-image: url(../js/tableSorter/th_mid.png);background-repeat:repeat-x;}
+
+/**定义【链接】样式**/
+span{cursor: pointer;}
+a{text-decoration: none;border: 0px;font: 12px;} 
+a:link,span:LINK {color: #1E5494;text-decoration:none;} 
+a:visited,span:VISITED {color:#FF0000;} 
+
+a[href='#']:hover ,form a[href='###']:hover{
+	border: #989898 0px solid; 
+	color: #000; 
+	text-decoration:none;
+	background: #d1e5ff;
+}
+ a:active{
+	border: #006699;
+	text-decoration:none;
+	border: #000099 0px solid;
+}
+ul li,ul li a,li a {
+	font-size:12px;
+	text-decoration:none;
+}
+
+.tabEdit{background: #fff;border:0px ; margin:0px; padding:0px; border-top:0px;}
+.tabEdit tr td{border:solid 1px #7aa5d6; padding-left:8px;}
+
+div.divShow{display: none;z-index: 10;padding: 10px;position: absolute;background: #eef6fb;border:1px #5d85b2 solid;overflow: auto;max-width: 350px;max-height: 200px;min-height: 50px;min-width: 150px;}
+div.divImg{position: absolute;top: 0px;right: 0px;cursor: pointer;
+	background:url(../js/dialog3.5.2/skins/chrome/lhgdg_bg.png);	
+	background-repeat:no-repeat;
+	height:24px;width:24px;
+	background-position:-79px -13px;
+}
+div.divContent{margin-top: 10px;text-align: left;}
+
+fieldset{border:1px ridge #4B94EA; padding:2px; width:100%;margin-top: 0px;}
+fieldset legend{color:#333333;font-size:12px;font-weight:bold;}

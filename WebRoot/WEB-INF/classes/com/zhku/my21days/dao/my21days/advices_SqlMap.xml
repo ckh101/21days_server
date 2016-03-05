@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="advices" >
+  <resultMap id="BaseResultMap" class="com.zhku.my21days.vo.Advice" >
+    <result column="id" property="adId" jdbcType="int" />
+    <result column="type" property="type" jdbcType="int" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="part1" property="part1" jdbcType="text" />
+    <result column="part2" property="part2" jdbcType="text" />
+    <result column="part3" property="part3" jdbcType="text" />
+    <result column="time" property="time" jdbcType="data" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <iterate property="oredCriteria" conjunction="or" prepend="where" removeFirstPrepend="iterate" >
+      <isEqual property="oredCriteria[].valid" compareValue="true" >
+        (
+        <iterate prepend="and" property="oredCriteria[].criteriaWithoutValue" conjunction="and" >
+          $oredCriteria[].criteriaWithoutValue[]$
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithSingleValue" conjunction="and" >
+          $oredCriteria[].criteriaWithSingleValue[].condition$
+            #oredCriteria[].criteriaWithSingleValue[].value#
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithListValue" conjunction="and" >
+          $oredCriteria[].criteriaWithListValue[].condition$
+          <iterate property="oredCriteria[].criteriaWithListValue[].values" open="(" close=")" conjunction="," >
+            #oredCriteria[].criteriaWithListValue[].values[]#
+          </iterate>
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithBetweenValue" conjunction="and" >
+          $oredCriteria[].criteriaWithBetweenValue[].condition$
+          #oredCriteria[].criteriaWithBetweenValue[].values[0]# and
+          #oredCriteria[].criteriaWithBetweenValue[].values[1]#
+        </iterate>
+        )
+      </isEqual>
+    </iterate>
+  </sql>
+  <sql id="oracle_Pagination_Head" >
+    <dynamic >
+      <isNotEmpty property="fromNumber" >
+        <isNotEmpty property="toNumber" >
+          <![CDATA[select * from ( select t.*, rownum rownum_ from ( ]]>
+        </isNotEmpty>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+  <sql id="oracle_Pagination_Tail" >
+    <dynamic >
+      <isNotEmpty property="fromNumber" >
+        <isNotEmpty property="maxRowsPerPage" >
+          <![CDATA[ limit #fromNumber:int#, #maxRowsPerPage:int# ]]>
+        </isNotEmpty>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+ 
+  <select id="selectByExample" resultMap="BaseResultMap" parameterClass="com.zhku.my21days.vo.AdviceExample" >
+   
+    select id, type, name, part1, part2, part3, time
+    from advices
+    <isParameterPresent >
+      <include refid="advices.Example_Where_Clause" />
+      <isNotNull property="orderByClause" >
+        order by $orderByClause$
+      </isNotNull>
+    </isParameterPresent>
+    <include refid="oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterClass="com.zhku.my21days.vo.Advice" >
+    select id, type, name, part1, part2, part3, time
+    from advices
+    where id = #adId:int#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.zhku.my21days.vo.Advice" >
+    delete from advices
+    where id = #adId:int#
+  </delete>
+  <delete id="deleteByExample" parameterClass="com.zhku.my21days.vo.AdviceExample" >
+    delete from advices
+    <include refid="advices.Example_Where_Clause" />
+  </delete>
+  <insert id="insert" parameterClass="com.zhku.my21days.vo.Advice" >
+    insert into advices (id, type, name, part1, part2, part3, time)
+    values (#adId:int#, #type:int#, #name:VARCHAR#, #part1:text#, #part2:text#, #part3:text#,
+      #time:data#)
+  </insert>
+  <insert id="insertSelective" parameterClass="com.zhku.my21days.vo.Advice" >
+    insert into advices
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="adId" >
+        id
+      </isNotNull>
+      <isNotNull prepend="," property="type" >
+        type
+      </isNotNull>
+      <isNotNull prepend="," property="name" >
+        name
+      </isNotNull>
+      <isNotNull prepend="," property="part1" >
+        part1
+      </isNotNull>
+      <isNotNull prepend="," property="part2" >
+        part2
+      </isNotNull>
+      <isNotNull prepend="," property="part3" >
+        part3
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        time
+      </isNotNull>
+      )
+    </dynamic>
+    values
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="adId" >
+        #adId:int#
+      </isNotNull>
+      <isNotNull prepend="," property="type" >
+        #type:int#
+      </isNotNull>
+      <isNotNull prepend="," property="name" >
+        #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="part1" >
+        #part1:text#
+      </isNotNull>
+      <isNotNull prepend="," property="part2" >
+        #part2:text#
+      </isNotNull>
+      <isNotNull prepend="," property="part3" >
+        #part3:text#
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        #time:data#
+      </isNotNull>
+      )
+    </dynamic>
+  </insert>
+  <select id="countByExample" parameterClass="com.zhku.my21days.vo.AdviceExample" resultClass="java.lang.Integer" >
+    select count(*) from advices
+    <include refid="advices.Example_Where_Clause" />
+  </select>
+  <update id="updateByExampleSelective" >
+    update advices
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="record.adId" >
+        id = #record.adId:int#
+      </isNotNull>
+      <isNotNull prepend="," property="record.type" >
+        type = #record.type:int#
+      </isNotNull>
+      <isNotNull prepend="," property="record.name" >
+        name = #record.name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="record.part1" >
+        part1 = #record.part1:text#
+      </isNotNull>
+      <isNotNull prepend="," property="record.part2" >
+        part2 = #record.part2:text#
+      </isNotNull>
+      <isNotNull prepend="," property="record.part3" >
+        part3 = #record.part3:text#
+      </isNotNull>
+      <isNotNull prepend="," property="record.time" >
+        time = #record.time:data#
+      </isNotNull>
+    </dynamic>
+    <isParameterPresent >
+      <include refid="advices.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByExample" >
+    update advices
+    set id = #record.adId:int#,
+      type = #record.type:int#,
+      name = #record.name:VARCHAR#,
+      part1 = #record.part1:text#,
+      part2 = #record.part2:text#,
+      part3 = #record.part3:text#,
+      time = #record.time:data#
+    <isParameterPresent >
+      <include refid="advices.Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterClass="com.zhku.my21days.vo.Advice" >
+    update advices
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="type" >
+        type = #type:int#
+      </isNotNull>
+      <isNotNull prepend="," property="name" >
+        name = #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="part1" >
+        part1 = #part1:text#
+      </isNotNull>
+      <isNotNull prepend="," property="part2" >
+        part2 = #part2:text#
+      </isNotNull>
+      <isNotNull prepend="," property="part3" >
+        part3 = #part3:text#
+      </isNotNull>
+      <isNotNull prepend="," property="time" >
+        time = #time:data#
+      </isNotNull>
+    </dynamic>
+    where id = #adId:int#
+  </update>
+  <update id="updateByPrimaryKey" parameterClass="com.zhku.my21days.vo.Advice" >
+    update advices
+    set type = #type:int#,
+      name = #name:VARCHAR#,
+      part1 = #part1:text#,
+      part2 = #part2:text#,
+      part3 = #part3:text#,
+      time = #time:data#
+    where id = #adId:int#
+  </update>
+</sqlMap>
